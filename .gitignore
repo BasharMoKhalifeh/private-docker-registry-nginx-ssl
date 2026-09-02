@@ -1,0 +1,19 @@
+# TLS/private material
+certs/*.key
+certs/*.pem
+certs/*.crt
+certs/*.csr
+
+# Local authentication files
+auth/htpasswd
+*.env
+.env
+
+# Logs
+*.log
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
