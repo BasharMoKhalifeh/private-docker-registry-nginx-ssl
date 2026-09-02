@@ -1,0 +1,32 @@
+services:
+  registry:
+    image: registry:2
+    container_name: private-registry
+    restart: unless-stopped
+    volumes:
+      - registry-data:/var/lib/registry
+      - ./registry/config.yml:/etc/docker/registry/config.yml:ro
+    networks:
+      - registry-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: registry-nginx
+    restart: unless-stopped
+    depends_on:
+      - registry
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    networks:
+      - registry-network
+
+networks:
+  registry-network:
+    driver: bridge
+
+volumes:
+  registry-data:
